@@ -11,12 +11,12 @@ public class MainActivity extends AppCompatActivity {
     EditText input;
     TextView output;
 
-    String expression = ""; // lưu biểu thức người dùng nhập
+    String expression = ""; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // layout bạn gửi ở trên
+        setContentView(R.layout.activity_main); 
 
         input = findViewById(R.id.editTextText);
         output = findViewById(R.id.textView);
@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 input.setText(expression);
             });
         }
-
-        // Xử lý nút "="
         Button equalBtn = findViewById(R.id.ES);
         equalBtn.setOnClickListener(v -> {
             try {
@@ -59,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         findViewById(R.id.Clear).setOnClickListener(v -> {
             if (expression.length() > 0) {
                 expression = expression.substring(0, expression.length() - 1);
@@ -67,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Xử lý nút "AC" – xóa hết
         findViewById(R.id.ClearAll).setOnClickListener(v -> {
             expression = "";
             input.setText("");
@@ -75,21 +71,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Hàm tính toán đơn giản (chỉ hỗ trợ + - * / % và .)
     private double calculate(String expr) {
-        // Loại bỏ các ký tự lạ
         expr = expr.replaceAll("[^0-9.+\\-*/%]", "");
-
-        // Sử dụng JavaScript Engine đơn giản nếu cho phép
-        // Nhưng ở đây ta làm đơn giản: chỉ tính toán chuỗi không ngoặc
-        // Dùng split và tính từng bước
 
         return evalSimple(expr);
     }
-
-    // Cách thủ công đơn giản: chỉ tính toán trái sang phải
     private double evalSimple(String expr) {
-        // Replace % bằng /100 để xử lý phần trăm
         expr = expr.replace("%", "/100");
 
         String[] tokens = expr.split("(?<=[-+*/])|(?=[-+*/])");
